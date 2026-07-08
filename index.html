@@ -2,25 +2,30 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Lembra Aí</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F7A5C">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lembra Aí">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#EEF1EC;
+    --bg:#F7F7F5;
     --surface:#FFFFFF;
-    --ink:#14201C;
-    --ink-soft:#5C665F;
-    --primary:#256D5B;   /* local */
-    --primary-tint:#DDEAE5;
-    --secondary:#4C5FD5; /* horário */
-    --secondary-tint:#E3E5FA;
-    --accent:#E8A33D;    /* CTA */
-    --accent-tint:#FBEBD2;
-    --line:#DCE1D9;
-    --danger:#C24E3A;
-    --radius:20px;
+    --ink:#1C1E1C;
+    --ink-soft:#8A8D89;
+    --primary:#1F7A5C;
+    --primary-tint:#E4F1EC;
+    --accent:#E2A33D;
+    --accent-tint:#FBEFDA;
+    --danger:#D14343;
+    --line:#ECECE8;
+    --radius:16px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -28,258 +33,143 @@
     font-family:'Inter',sans-serif;
     background:var(--bg);
     color:var(--ink);
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    min-height:100vh;
-    padding:28px 12px;
+    display:flex;justify-content:center;align-items:flex-start;
+    min-height:100vh;padding:28px 12px;
   }
   .device{
-    width:390px;
-    max-width:100%;
+    width:390px;max-width:100%;
     background:var(--surface);
-    border-radius:36px;
-    box-shadow:0 30px 60px -20px rgba(20,32,28,0.35), 0 0 0 1px rgba(20,32,28,0.04);
-    overflow:hidden;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    height:800px;
+    border-radius:32px;
+    box-shadow:0 24px 50px -20px rgba(20,32,28,0.28), 0 0 0 1px rgba(20,32,28,0.04);
+    overflow:hidden;position:relative;
+    display:flex;flex-direction:column;height:800px;
   }
   .statusbar{
     display:flex;justify-content:space-between;align-items:center;
-    padding:14px 24px 4px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:12px;
-    color:var(--ink-soft);
+    padding:14px 22px 2px;font-size:12px;color:var(--ink-soft);
   }
-  header.app-header{
-    padding:6px 24px 18px;
-    border-bottom:1px solid var(--line);
+  header.app-header{ padding:8px 22px 16px; border-bottom:1px solid var(--line); }
+  .brand{ display:flex;align-items:center;justify-content:space-between; }
+  .brand h1{ font-size:20px;font-weight:700;margin:0;letter-spacing:-0.01em; }
+  .today-date{ font-size:11px;color:var(--ink-soft); text-transform:capitalize; }
+  .pending-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:8px;font-size:12px;color:var(--ink-soft);
   }
-  .brand{
-    display:flex;align-items:baseline;justify-content:space-between;
-  }
-  .brand h1{
-    font-family:'Fraunces',serif;
-    font-weight:700;
-    font-size:26px;
-    margin:0;
-    letter-spacing:-0.01em;
-  }
-  .brand h1 span{color:var(--primary);}
-  .today-date{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
-    color:var(--ink-soft);
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-  }
-  .subline{
-    margin-top:6px;
-    font-size:13px;
-    color:var(--ink-soft);
-  }
-  .subline b{color:var(--primary);font-weight:600;}
+  .pending-pill b{color:var(--primary);font-weight:600;}
 
-  main{
-    flex:1;
-    overflow-y:auto;
-    padding:20px 20px 100px;
-    position:relative;
-  }
-  .empty-state{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--ink-soft);
-  }
-  .empty-state .glyph{
-    font-size:34px;margin-bottom:10px;
-  }
-  .empty-state h3{
-    font-family:'Fraunces',serif;
-    font-size:19px;color:var(--ink);margin:0 0 6px;
-  }
-  .empty-state p{font-size:13px;line-height:1.5;margin:0;}
+  main{ flex:1;overflow-y:auto;padding:14px 18px 100px; }
+  .empty-state{ text-align:center;padding:70px 24px;color:var(--ink-soft); }
+  .empty-state h3{ font-size:16px;color:var(--ink);margin:0 0 6px;font-weight:600; }
+  .empty-state p{ font-size:13px;line-height:1.5;margin:0; }
 
-  .trail{
-    position:relative;
-    padding-left:34px;
+  .list{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .row{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:14px 14px; border-bottom:1px solid var(--line);
   }
-  .trail::before{
-    content:'';
-    position:absolute;
-    left:13px;top:6px;bottom:6px;
-    width:2px;
-    background:repeating-linear-gradient(to bottom, var(--line) 0 6px, transparent 6px 11px);
+  .row:last-child{ border-bottom:none; }
+  .row.done .task-text{ color:var(--ink-soft); text-decoration:line-through; }
+  .row.done{ background:#FCFCFB; }
+  .icon-dot{
+    flex-shrink:0;width:30px;height:30px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:13px;
+    background:var(--bg); margin-top:1px;
   }
-  .node{
-    position:relative;
-    margin-bottom:16px;
-    animation: pop .35s ease;
+  .row.alert .icon-dot{ background:var(--accent); }
+  .row-body{ flex:1;min-width:0; }
+  .task-text{ font-size:14px;font-weight:500;line-height:1.4; }
+  .meta{ font-size:11.5px;color:var(--ink-soft);margin-top:3px; }
+  .alert-tag{
+    display:inline-block;margin-top:5px;font-size:10.5px;font-weight:600;
+    background:var(--accent-tint);color:#9C6A16;padding:2px 8px;border-radius:20px;
   }
-  @keyframes pop{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
-  .node .dot{
-    position:absolute;
-    left:-34px; top:14px;
-    width:28px;height:28px;
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-size:13px;
-    background:var(--surface);
-    border:2px solid var(--line);
-    z-index:2;
+  .row-actions{ display:flex;align-items:center;gap:6px;flex-shrink:0; }
+  .icon-btn{
+    width:26px;height:26px;border-radius:50%;border:1.5px solid var(--line);
+    background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    font-size:12px;color:var(--ink-soft);
   }
-  .node.local .dot{border-color:var(--primary); color:var(--primary); background:var(--primary-tint);}
-  .node.horario .dot{border-color:var(--secondary); color:var(--secondary); background:var(--secondary-tint);}
-  .node.anytime .dot{border-color:var(--ink-soft); color:var(--ink-soft);}
-  .node.arrived .dot{background:var(--accent); border-color:var(--accent); color:#fff;}
-  .card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:14px 16px;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-  }
-  .node.done .card{opacity:0.45;}
-  .node.done .task-text{text-decoration:line-through;}
-  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-  .task-text{font-size:14.5px;font-weight:500;line-height:1.35;}
-  .meta{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
-    color:var(--ink-soft);
-    display:flex;align-items:center;gap:5px;
-  }
-  .badge-arrived{
-    font-size:10.5px;
-    font-weight:600;
-    background:var(--accent);
-    color:#fff;
-    padding:2px 8px;
-    border-radius:20px;
-    letter-spacing:0.02em;
-  }
-  .check-btn{
-    width:24px;height:24px;border-radius:50%;
-    border:1.5px solid var(--line);
-    background:none;flex-shrink:0;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    color:transparent;font-size:13px;
-    transition:.15s;
-  }
-  .node.done .check-btn{
-    background:var(--primary);border-color:var(--primary);color:#fff;
-  }
+  .icon-btn.check.done{ background:var(--primary);border-color:var(--primary);color:#fff; }
+  .icon-btn.trash{ color:var(--danger);border-color:transparent; }
+  .icon-btn.trash:hover{ background:#FBECEC; }
 
   .fab{
-    position:absolute;
-    right:20px; bottom:88px;
-    width:56px;height:56px;
-    border-radius:50%;
-    background:var(--ink);
-    color:#fff;
-    border:none;
-    font-size:26px;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;
-    box-shadow:0 12px 24px -8px rgba(20,32,28,0.5);
+    position:absolute;right:20px;bottom:88px;width:54px;height:54px;border-radius:50%;
+    background:var(--ink);color:#fff;border:none;font-size:24px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 10px 22px -8px rgba(20,32,28,0.45);
   }
-
-  nav.bottom{
-    display:flex;
-    border-top:1px solid var(--line);
-    background:var(--surface);
-  }
+  nav.bottom{ display:flex;border-top:1px solid var(--line);background:var(--surface); }
   nav.bottom button{
-    flex:1;
-    border:none;background:none;
-    padding:12px 0 16px;
-    font-family:'Inter',sans-serif;
-    font-size:11px;font-weight:600;
-    color:var(--ink-soft);
-    cursor:pointer;
-    display:flex;flex-direction:column;align-items:center;gap:4px;
+    flex:1;border:none;background:none;padding:12px 0 16px;font-size:11px;font-weight:600;
+    color:var(--ink-soft);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;
   }
-  nav.bottom button.active{color:var(--primary);}
-  nav.bottom .icon{font-size:18px;}
+  nav.bottom button.active{ color:var(--primary); }
+  nav.bottom .icon{ font-size:17px; }
 
-  /* Sheet */
-  .sheet-backdrop{
-    position:absolute;inset:0;
-    background:rgba(20,32,28,0.35);
-    display:none;
-    z-index:10;
-  }
-  .sheet-backdrop.show{display:block;}
+  .sheet-backdrop{ position:absolute;inset:0;background:rgba(20,32,28,0.35);display:none;z-index:10; }
+  .sheet-backdrop.show{ display:block; }
   .sheet{
-    position:absolute;left:0;right:0;bottom:0;
-    background:var(--surface);
-    border-radius:24px 24px 0 0;
-    padding:22px 22px 26px;
-    transform:translateY(100%);
-    transition:transform .28s ease;
-    z-index:11;
+    position:absolute;left:0;right:0;bottom:0;background:var(--surface);
+    border-radius:22px 22px 0 0;padding:20px 20px 24px;
+    transform:translateY(100%);transition:transform .25s ease;z-index:11;
+    max-height:88%;overflow-y:auto;
   }
-  .sheet.show{transform:translateY(0);}
-  .sheet h2{
-    font-family:'Fraunces',serif;font-size:19px;margin:0 0 14px;
-  }
+  .sheet.show{ transform:translateY(0); }
+  .sheet h2{ font-size:17px;margin:0 0 12px;font-weight:700; }
   .sheet label{
-    font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-soft);
-    display:block;margin:14px 0 6px;
+    font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;
+    color:var(--ink-soft);display:block;margin:14px 0 6px;
   }
   .sheet input[type=text], .sheet input[type=time]{
-    width:100%;padding:11px 13px;
-    border:1.5px solid var(--line);border-radius:12px;
-    font-family:'Inter',sans-serif;font-size:14.5px;
-    background:var(--bg);
+    width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;
+    font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);
   }
-  .type-toggle{display:flex;gap:8px;}
+  .type-toggle{ display:flex;gap:8px; }
   .type-toggle button{
     flex:1;padding:10px 4px;border-radius:12px;border:1.5px solid var(--line);
-    background:var(--bg);font-size:12.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;
+    background:var(--bg);font-size:12px;font-weight:600;color:var(--ink-soft);cursor:pointer;
   }
-  .type-toggle button.sel.local{border-color:var(--primary);color:var(--primary);background:var(--primary-tint);}
-  .type-toggle button.sel.horario{border-color:var(--secondary);color:var(--secondary);background:var(--secondary-tint);}
-  .type-toggle button.sel.anytime{border-color:var(--ink);color:var(--ink);background:var(--bg);}
-  .loc-row{
-    display:flex;gap:8px;align-items:center;margin-top:8px;
-  }
+  .type-toggle button.sel{ border-color:var(--primary);color:var(--primary);background:var(--primary-tint); }
+  .loc-row{ display:flex;gap:8px; }
   .loc-btn{
-    flex-shrink:0;
-    padding:11px 14px;border-radius:12px;border:none;
-    background:var(--primary);color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;
-    white-space:nowrap;
+    flex:1;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);
+    background:var(--primary-tint);color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;
   }
-  .loc-status{font-size:11.5px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;}
+  .loc-btn.captured{ background:var(--primary);color:#fff;border-color:var(--primary); }
+  .loc-status{ font-size:11.5px;color:var(--ink-soft);margin-top:6px; }
+  .radius-row{ display:flex;align-items:center;gap:8px; }
+  .radius-row input[type=number]{
+    width:90px;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;
+    font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);
+  }
+  .radius-unit{ font-size:13px;color:var(--ink-soft);font-weight:500; }
+  .hint{ font-size:11.5px;color:var(--ink-soft);margin-top:6px;line-height:1.4; }
   .save-btn{
-    margin-top:20px;width:100%;padding:14px;border:none;border-radius:14px;
-    background:var(--ink);color:#fff;font-size:14.5px;font-weight:600;cursor:pointer;
+    margin-top:20px;width:100%;padding:13px;border:none;border-radius:14px;
+    background:var(--ink);color:#fff;font-size:14px;font-weight:600;cursor:pointer;
   }
-  .hint{
-    font-size:11.5px;color:var(--ink-soft);margin-top:6px;line-height:1.4;
-  }
-  .close-x{
-    position:absolute;right:20px;top:18px;background:none;border:none;font-size:18px;color:var(--ink-soft);cursor:pointer;
-  }
+  .close-x{ position:absolute;right:18px;top:16px;background:none;border:none;font-size:17px;color:var(--ink-soft);cursor:pointer; }
 
-  /* Settings tab */
-  .settings-block{
-    background:var(--surface);border:1px solid var(--line);border-radius:16px;
-    padding:16px;margin-bottom:14px;
-  }
-  .settings-block h4{margin:0 0 4px;font-family:'Fraunces',serif;font-size:15.5px;}
-  .settings-block p{margin:0;font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+  .settings-block{ background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px; }
+  .settings-block h4{ margin:0 0 4px;font-size:14px;font-weight:600; }
+  .settings-block p{ margin:0;font-size:12.5px;color:var(--ink-soft);line-height:1.5; }
   .tag-soon{
     display:inline-block;margin-top:8px;font-size:10.5px;font-weight:700;
-    background:var(--accent-tint);color:#9C6A16;padding:3px 9px;border-radius:20px;letter-spacing:0.03em;
+    background:var(--accent-tint);color:#9C6A16;padding:3px 9px;border-radius:20px;
   }
-  .status-row{display:flex;justify-content:space-between;align-items:center;}
-  .dotstate{width:9px;height:9px;border-radius:50%;background:var(--primary);}
-  .dotstate.off{background:var(--danger);}
+  .status-row{ display:flex;justify-content:space-between;align-items:center; }
+  .dotstate{ width:9px;height:9px;border-radius:50%;background:var(--primary); }
+  .dotstate.off{ background:var(--danger); }
+  .notif-permission{
+    margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--accent-tint);
+    font-size:12px;color:#9C6A16;display:flex;justify-content:space-between;align-items:center;gap:8px;
+  }
+  .notif-permission button{
+    border:none;background:var(--ink);color:#fff;font-size:11.5px;font-weight:600;
+    padding:6px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;
+  }
 </style>
 </head>
 <body>
@@ -289,24 +179,21 @@
 
   <header class="app-header">
     <div class="brand">
-      <h1>Lembra<span>Aí</span></h1>
+      <h1>Lembra Aí</h1>
       <span class="today-date" id="todayDate"></span>
     </div>
-    <div class="subline" id="subline">Carregando sua trilha...</div>
+    <div class="pending-pill" id="pendingPill"></div>
   </header>
 
-  <main id="mainTrail">
-    <!-- filled by JS -->
-  </main>
+  <main id="mainTrail"></main>
 
   <button class="fab" id="fabAdd">+</button>
 
   <nav class="bottom">
-    <button class="active" data-tab="trilha"><span class="icon">🧭</span>Trilha</button>
+    <button class="active" data-tab="trilha"><span class="icon">🧭</span>Hoje</button>
     <button data-tab="ajustes"><span class="icon">⚙️</span>Ajustes</button>
   </nav>
 
-  <!-- Sheet: add task -->
   <div class="sheet-backdrop" id="backdrop"></div>
   <div class="sheet" id="sheet">
     <button class="close-x" id="closeSheet">✕</button>
@@ -317,7 +204,7 @@
 
     <label>Quando avisar</label>
     <div class="type-toggle">
-      <button data-type="anytime" class="sel anytime">Sem gatilho</button>
+      <button data-type="anytime" class="sel">Sem gatilho</button>
       <button data-type="horario">Por horário</button>
       <button data-type="local">Por local</button>
     </div>
@@ -328,13 +215,21 @@
     </div>
 
     <div id="localField" style="display:none;">
-      <label>Local</label>
+      <label>Nome do lugar</label>
+      <input type="text" id="placeName" placeholder="Ex: Casa">
+
+      <label>Ponto de referência</label>
       <div class="loc-row">
-        <input type="text" id="placeName" placeholder="Nome do lugar (ex: Casa)">
-        <button class="loc-btn" id="useLocBtn">📍 Usar aqui</button>
+        <button type="button" class="loc-btn" id="captureLocBtn">📍 Usar minha localização atual</button>
       </div>
-      <div class="loc-status" id="locStatus">Toque em "Usar aqui" no local desejado.</div>
-      <div class="hint">O app vai avisar quando você chegar a ~150m deste ponto (com a aba aberta).</div>
+      <div class="loc-status" id="locStatus">Fique no local desejado e toque no botão acima.</div>
+
+      <label>Distância</label>
+      <div class="radius-row">
+        <input type="number" id="radiusInput" min="5" max="2000" step="1" value="20">
+        <span class="radius-unit">metros</span>
+      </div>
+      <div class="hint">O app avisa quando você se afastar mais que essa distância do ponto capturado.</div>
     </div>
 
     <button class="save-btn" id="saveTask">Salvar lembrete</button>
@@ -343,18 +238,38 @@
 
 <script>
 const STORAGE_KEY = 'tasks';
+const DATE_KEY = 'tasksDate';
+
+// Preencha estes dois valores depois de configurar o Supabase (veja o guia).
+// Deixe como está (vazio) se ainda não for usar a captura por WhatsApp.
+const SUPABASE_URL = '';
+const SUPABASE_ANON_KEY = '';
+const WHATSAPP_ENABLED = SUPABASE_URL && SUPABASE_ANON_KEY;
 let tasks = [];
 let selectedType = 'anytime';
-let pendingCoords = null;
 let watchId = null;
+let timeCheckId = null;
+let audioCtx = null;
+let currentDayKey = todayKey();
+let capturedCoords = null;
+
+function todayKey(){
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
 
 const mainTrail = document.getElementById('mainTrail');
-const subline = document.getElementById('subline');
+const pendingPill = document.getElementById('pendingPill');
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
 
 function fmtDate(){
   const d = new Date();
-  const opts = { weekday:'short', day:'2-digit', month:'short' };
-  return d.toLocaleDateString('pt-BR', opts).toUpperCase();
+  return d.toLocaleDateString('pt-BR', { weekday:'short', day:'2-digit', month:'short' });
 }
 document.getElementById('todayDate').textContent = fmtDate();
 
@@ -366,20 +281,75 @@ function updateClock(){
 updateClock(); setInterval(updateClock, 30000);
 
 async function loadTasks(){
-  try{
-    const res = await window.storage.get(STORAGE_KEY);
-    tasks = res ? JSON.parse(res.value) : [];
-  }catch(e){
+  const today = todayKey();
+  let storedDate = null;
+  try{ storedDate = localStorage.getItem(DATE_KEY); }catch(e){ storedDate = null; }
+
+  if(storedDate !== today){
     tasks = [];
+    safeSet(DATE_KEY, today);
+    safeSet(STORAGE_KEY, JSON.stringify(tasks));
+  } else {
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      tasks = raw ? JSON.parse(raw) : [];
+    }catch(e){ tasks = []; }
   }
+
+  tasks.forEach(t=>{ if(t.notifyCount===undefined) t.notifyCount=0; if(t.lastNotifyAt===undefined) t.lastNotifyAt=0; });
+  currentDayKey = today;
   render();
+  startTimeChecking();
+  if(tasks.some(t=>t.type==='local' && !t.done)) startWatching();
+  if(WHATSAPP_ENABLED){
+    pollWhatsappInbox();
+    setInterval(pollWhatsappInbox, 25000);
+  }
 }
 
-async function saveTasks(){
+// ---- Captura por WhatsApp ----
+async function pollWhatsappInbox(){
   try{
-    await window.storage.set(STORAGE_KEY, JSON.stringify(tasks));
-  }catch(e){ console.error('Erro ao salvar', e); }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/whatsapp_inbox?consumed=eq.false&select=*`, {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      }
+    });
+    if(!res.ok) return;
+    const rows = await res.json();
+    if(!rows.length) return;
+
+    rows.forEach(row=>{
+      tasks.push({
+        id: 'wa_' + row.id,
+        text: row.text,
+        type: 'anytime',
+        done:false, arrived:false,
+        notifyCount:0, lastNotifyAt:0,
+        fromWhatsapp:true
+      });
+      // marca como consumida no Supabase pra não duplicar
+      fetch(`${SUPABASE_URL}/rest/v1/whatsapp_inbox?id=eq.${row.id}`, {
+        method:'PATCH',
+        headers:{
+          'Content-Type':'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ consumed:true })
+      }).catch(()=>{});
+    });
+    saveTasks();
+    render();
+  }catch(e){ /* sem conexão ou não configurado ainda */ }
 }
+
+function safeSet(key, value){
+  try{ localStorage.setItem(key, value); }catch(e){ console.error('storage set falhou', e); }
+}
+
+function saveTasks(){ safeSet(STORAGE_KEY, JSON.stringify(tasks)); }
 
 function iconFor(type){
   if(type==='local') return '📍';
@@ -387,41 +357,10 @@ function iconFor(type){
   return '✦';
 }
 
-function render(){
-  const pending = tasks.filter(t=>!t.done).length;
-  subline.innerHTML = pending>0
-    ? `Você tem <b>${pending}</b> lembrete${pending>1?'s':''} na trilha de hoje`
-    : `Trilha livre. Toque em + para adicionar algo.`;
-
-  if(tasks.length===0){
-    mainTrail.innerHTML = `
-      <div class="empty-state">
-        <div class="glyph">🧭</div>
-        <h3>Sua trilha está vazia</h3>
-        <p>Adicione um lembrete por local, horário ou sem gatilho — e ele aparece aqui na ordem do seu dia.</p>
-      </div>`;
-    return;
-  }
-
-  const sorted = [...tasks].sort((a,b)=>(a.done?1:0)-(b.done?1:0));
-
-  mainTrail.innerHTML = `<div class="trail">${sorted.map(t=>`
-    <div class="node ${t.type} ${t.done?'done':''} ${t.arrived?'arrived':''}" data-id="${t.id}">
-      <div class="dot">${iconFor(t.type)}</div>
-      <div class="card">
-        <div class="card-top">
-          <div class="task-text">${escapeHtml(t.text)}</div>
-          <button class="check-btn" data-action="toggle" data-id="${t.id}">✓</button>
-        </div>
-        <div class="meta">
-          ${t.type==='local' ? `📍 ${escapeHtml(t.place||'Local salvo')}` : ''}
-          ${t.type==='horario' ? `⏰ ${t.time}` : ''}
-          ${t.type==='anytime' ? `Sem gatilho — aparece na trilha` : ''}
-          ${t.arrived ? `<span class="badge-arrived">Chegou!</span>` : ''}
-        </div>
-      </div>
-    </div>
-  `).join('')}</div>`;
+function badgeText(t){
+  if(t.type==='horario') return 'Na hora!';
+  if(t.type==='local') return 'Saiu de lá!';
+  return 'Avisado!';
 }
 
 function escapeHtml(s){
@@ -430,12 +369,59 @@ function escapeHtml(s){
   return d.innerHTML;
 }
 
+function render(){
+  const pending = tasks.filter(t=>!t.done).length;
+  pendingPill.innerHTML = pending>0
+    ? `<b>${pending}</b> pendente${pending>1?'s':''} hoje`
+    : `Nada pendente hoje`;
+
+  if(tasks.length===0){
+    mainTrail.innerHTML = `
+      <div class="empty-state">
+        <h3>Nenhum lembrete hoje</h3>
+        <p>Toque em + para adicionar algo por local, horário ou sem gatilho.</p>
+      </div>`;
+    return;
+  }
+
+  const sorted = [...tasks].sort((a,b)=>(a.done?1:0)-(b.done?1:0));
+
+  mainTrail.innerHTML = `<div class="list">${sorted.map(t=>`
+    <div class="row ${t.done?'done':''} ${t.arrived?'alert':''}" data-id="${t.id}">
+      <div class="icon-dot">${iconFor(t.type)}</div>
+      <div class="row-body">
+        <div class="task-text">${escapeHtml(t.text)}</div>
+        <div class="meta">
+          ${t.type==='local' ? `${escapeHtml(t.place||'Local salvo')} · raio ${t.radius||20}m` : ''}
+          ${t.type==='horario' ? `${t.time}` : ''}
+          ${t.type==='anytime' ? (t.fromWhatsapp ? 'via WhatsApp' : 'Sem gatilho') : ''}
+        </div>
+        ${t.arrived ? `<span class="alert-tag">${badgeText(t)}</span>` : ''}
+      </div>
+      <div class="row-actions">
+        <button class="icon-btn check ${t.done?'done':''}" data-action="toggle" data-id="${t.id}">✓</button>
+        <button class="icon-btn trash" data-action="delete" data-id="${t.id}">🗑</button>
+      </div>
+    </div>
+  `).join('')}</div>`;
+}
+
 mainTrail.addEventListener('click', (e)=>{
-  const btn = e.target.closest('[data-action="toggle"]');
-  if(!btn) return;
-  const id = btn.dataset.id;
-  const t = tasks.find(x=>x.id===id);
-  if(t){ t.done = !t.done; saveTasks(); render(); }
+  const toggleBtn = e.target.closest('[data-action="toggle"]');
+  if(toggleBtn){
+    const t = tasks.find(x=>x.id===toggleBtn.dataset.id);
+    if(t){ t.done = !t.done; saveTasks(); render(); }
+    return;
+  }
+  const delBtn = e.target.closest('[data-action="delete"]');
+  if(delBtn){
+    const t = tasks.find(x=>x.id===delBtn.dataset.id);
+    if(t && confirm(`Excluir "${t.text}"?`)){
+      tasks = tasks.filter(x=>x.id!==t.id);
+      saveTasks();
+      render();
+    }
+  }
 });
 
 // ---- Sheet handling ----
@@ -455,8 +441,11 @@ function closeSheet(){
   document.getElementById('taskText').value='';
   document.getElementById('placeName').value='';
   document.getElementById('taskTime').value='';
-  pendingCoords = null;
-  document.getElementById('locStatus').textContent = 'Toque em "Usar aqui" no local desejado.';
+  capturedCoords = null;
+  document.getElementById('captureLocBtn').classList.remove('captured');
+  document.getElementById('captureLocBtn').textContent = '📍 Usar minha localização atual';
+  document.getElementById('locStatus').textContent = 'Fique no local desejado e toque no botão acima.';
+  document.getElementById('radiusInput').value = 20;
   selectType('anytime');
 }
 
@@ -472,7 +461,8 @@ function selectType(type){
   document.getElementById('localField').style.display = type==='local' ? 'block' : 'none';
 }
 
-document.getElementById('useLocBtn').addEventListener('click', ()=>{
+document.getElementById('captureLocBtn').addEventListener('click', ()=>{
+  const btn = document.getElementById('captureLocBtn');
   const status = document.getElementById('locStatus');
   if(!navigator.geolocation){
     status.textContent = 'Geolocalização não suportada neste navegador.';
@@ -481,8 +471,10 @@ document.getElementById('useLocBtn').addEventListener('click', ()=>{
   status.textContent = 'Obtendo sua localização...';
   navigator.geolocation.getCurrentPosition(
     (pos)=>{
-      pendingCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-      status.textContent = `✓ Local capturado (±${Math.round(pos.coords.accuracy)}m)`;
+      capturedCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      btn.classList.add('captured');
+      btn.textContent = '✓ Local capturado';
+      status.textContent = `Precisão de ±${Math.round(pos.coords.accuracy)}m. Toque de novo se quiser recapturar.`;
     },
     (err)=>{
       status.textContent = 'Não foi possível obter localização: ' + err.message;
@@ -497,19 +489,26 @@ document.getElementById('saveTask').addEventListener('click', ()=>{
 
   const task = {
     id: 't_' + Date.now(),
-    text, type: selectedType, done:false, arrived:false
+    text, type: selectedType, done:false, arrived:false,
+    notifyCount:0, lastNotifyAt:0
   };
 
   if(selectedType==='horario'){
     const time = document.getElementById('taskTime').value;
     if(!time){ alert('Escolha um horário.'); return; }
     task.time = time;
+    ensureNotifyPermission();
   }
   if(selectedType==='local'){
-    if(!pendingCoords){ alert('Capture a localização primeiro, tocando em "Usar aqui".'); return; }
+    if(!capturedCoords){ alert('Toque em "Usar minha localização atual" primeiro.'); return; }
+    const dist = parseInt(document.getElementById('radiusInput').value, 10);
+    if(!dist || dist < 5){ alert('Escolha uma distância de pelo menos 5 metros.'); return; }
     task.place = document.getElementById('placeName').value.trim() || 'Local salvo';
-    task.lat = pendingCoords.lat;
-    task.lng = pendingCoords.lng;
+    task.lat = capturedCoords.lat;
+    task.lng = capturedCoords.lng;
+    task.radius = dist;
+    task.everInside = true;
+    ensureNotifyPermission();
     startWatching();
   }
 
@@ -517,9 +516,10 @@ document.getElementById('saveTask').addEventListener('click', ()=>{
   saveTasks();
   render();
   closeSheet();
+  startTimeChecking();
 });
 
-// ---- Geofencing (works while tab is open) ----
+// ---- Geofencing ----
 function haversine(lat1, lng1, lat2, lng2){
   const R = 6371000;
   const toRad = d => d * Math.PI/180;
@@ -534,29 +534,117 @@ function startWatching(){
     const { latitude, longitude } = pos.coords;
     let changed = false;
     tasks.forEach(t=>{
-      if(t.type==='local' && !t.done && !t.arrived){
-        const dist = haversine(latitude, longitude, t.lat, t.lng);
-        if(dist <= 150){
-          t.arrived = true;
-          changed = true;
-          notify(t);
-        }
+      if(t.type!=='local' || t.done || t.arrived) return;
+      const dist = haversine(latitude, longitude, t.lat, t.lng);
+      const inside = dist <= (t.radius || 20);
+
+      if(inside){
+        t.everInside = true;
+      } else if(t.everInside){
+        t.arrived = true; changed = true;
+        fireAlert(t, `Você saiu de ${t.place}`);
       }
     });
     if(changed){ saveTasks(); render(); }
   }, ()=>{}, { enableHighAccuracy:true, maximumAge:15000 });
 }
 
-function notify(task){
-  if('Notification' in window){
-    if(Notification.permission === 'granted'){
-      new Notification('Lembra Aí 📍', { body: task.text });
-    } else if(Notification.permission !== 'denied'){
-      Notification.requestPermission().then(p=>{
-        if(p==='granted') new Notification('Lembra Aí 📍', { body: task.text });
-      });
-    }
+// ---- Time-based checking + day rollover ----
+function startTimeChecking(){
+  if(timeCheckId !== null) return;
+  timeCheckId = setInterval(checkTimeTasks, 20000);
+  checkTimeTasks();
+}
+
+function checkTimeTasks(){
+  const today = todayKey();
+  if(today !== currentDayKey){
+    currentDayKey = today;
+    tasks = [];
+    safeSet(DATE_KEY, today);
+    saveTasks();
+    render();
+    return;
   }
+
+  const now = new Date();
+  const nowStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  let changed = false;
+  tasks.forEach(t=>{
+    if(t.type==='horario' && !t.done && !t.arrived && t.time && t.time <= nowStr){
+      t.arrived = true; changed = true;
+      fireAlert(t, `Hora de: ${t.text}`);
+    }
+  });
+  if(changed){ saveTasks(); render(); }
+  checkSnoozes();
+}
+
+function checkSnoozes(){
+  const now = Date.now();
+  let changed = false;
+  tasks.forEach(t=>{
+    if(t.arrived && !t.done && t.notifyCount < 3 && now - t.lastNotifyAt > 3*60*1000){
+      fireAlert(t, t.text, true);
+      changed = true;
+    }
+  });
+  if(changed){ saveTasks(); }
+}
+
+function fireAlert(task, message, isSnooze){
+  task.notifyCount = (task.notifyCount||0) + 1;
+  task.lastNotifyAt = Date.now();
+  notify(message, isSnooze);
+}
+
+function ensureNotifyPermission(){
+  if('Notification' in window && Notification.permission === 'default'){
+    Notification.requestPermission();
+  }
+}
+
+function notify(message, isSnooze){
+  const title = isSnooze ? 'Lembra Aí — ainda pendente' : 'Lembra Aí';
+  showSystemNotification(title, message);
+  playBeep();
+  if('vibrate' in navigator) navigator.vibrate([180,90,180]);
+}
+
+function showSystemNotification(title, body){
+  if(!('Notification' in window)) return;
+  if(Notification.permission !== 'granted'){
+    if(Notification.permission !== 'denied') Notification.requestPermission();
+    return;
+  }
+  // No iPhone/Safari, notificações só funcionam via Service Worker (mesmo com o app instalado na Tela de Início).
+  if('serviceWorker' in navigator && navigator.serviceWorker.controller){
+    navigator.serviceWorker.ready.then(reg=>{
+      reg.showNotification(title, { body, icon:'icon-192.png', badge:'icon-192.png' });
+    }).catch(()=>{ tryPlainNotification(title, body); });
+  } else {
+    tryPlainNotification(title, body);
+  }
+}
+
+function tryPlainNotification(title, body){
+  try{ new Notification(title, { body }); }catch(e){ /* navegador não suporta este método */ }
+}
+
+function playBeep(){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(880, audioCtx.currentTime);
+    g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + 0.5);
+  }catch(e){}
 }
 
 // ---- Tabs ----
@@ -577,21 +665,29 @@ function renderSettings(){
         <h4>Localização</h4>
         <span class="dotstate" id="geoDot"></span>
       </div>
-      <p>Usada para avisar quando você chega perto de um local salvo. Funciona enquanto o app está aberto no navegador.</p>
+      <p>Usada para avisar quando você entra ou sai do raio definido a partir de um ponto capturado. Funciona enquanto o app está aberto no navegador.</p>
+    </div>
+    <div class="settings-block">
+      <div class="status-row">
+        <h4>Notificações</h4>
+        <span class="dotstate" id="notifDot"></span>
+      </div>
+      <p>Precisa estar ativada pra você ouvir e ver o aviso quando um lembrete disparar. No iPhone, só funciona depois de adicionar este app à Tela de Início (Compartilhar → Adicionar à Tela de Início).</p>
+      <div class="notif-permission" id="notifBanner" style="display:none;">
+        <span>Notificações ainda não ativadas</span>
+        <button id="enableNotifBtn">Ativar</button>
+      </div>
     </div>
     <div class="settings-block">
       <h4>Captura por WhatsApp</h4>
-      <p>Mande um áudio ou texto pro número do Lembra Aí e vira lembrete automaticamente — sem precisar abrir o app.</p>
-      <span class="tag-soon">Em breve</span>
+      <p>${WHATSAPP_ENABLED
+        ? 'Ativa! Mande um texto pro número configurado e ele vira lembrete automaticamente.'
+        : 'Mande um texto pro número do Lembra Aí e vira lembrete automaticamente — sem precisar abrir o app.'}</p>
+      ${WHATSAPP_ENABLED ? '' : '<span class="tag-soon">Configuração pendente</span>'}
     </div>
     <div class="settings-block">
-      <h4>Lembrete inteligente</h4>
-      <p>Se você ignorar um aviso duas vezes, o app pergunta se ainda é importante — em vez de insistir sem parar.</p>
-      <span class="tag-soon">Em breve</span>
-    </div>
-    <div class="settings-block">
-      <h4>Seus dados</h4>
-      <p>Tudo fica salvo só na sua conta. Nenhum dado de localização é compartilhado.</p>
+      <h4>Reset diário</h4>
+      <p>Seus lembretes ficam salvos o dia todo, mesmo se você fechar o app. Eles somem sozinhos à meia-noite — ou antes, se você excluir.</p>
     </div>
   `;
   const dot = document.getElementById('geoDot');
@@ -600,9 +696,23 @@ function renderSettings(){
       dot.classList.toggle('off', p.state !== 'granted');
     }).catch(()=>{});
   }
+
+  const notifDot = document.getElementById('notifDot');
+  const notifBanner = document.getElementById('notifBanner');
+  const granted = ('Notification' in window) && Notification.permission === 'granted';
+  notifDot.classList.toggle('off', !granted);
+  notifBanner.style.display = granted ? 'none' : 'flex';
+  const enableBtn = document.getElementById('enableNotifBtn');
+  if(enableBtn){
+    enableBtn.addEventListener('click', ()=>{
+      if('Notification' in window){
+        Notification.requestPermission().then(()=> renderSettings());
+      }
+      playBeep();
+    });
+  }
 }
 
-// init
 loadTasks();
 </script>
 </body>
